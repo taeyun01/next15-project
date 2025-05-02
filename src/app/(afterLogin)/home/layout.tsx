@@ -3,5 +3,10 @@ export default function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <h1>홈 레이아웃</h1>
+      {children}
+    </div>
+  );
 }
