@@ -17,12 +17,22 @@
   height: 100dvh;
 }
 
+.leftSectionFixed nav li {
+  list-style: none;
+}
+
+.leftSectionFixed nav {
+  flex: 1;
+}
+
 .leftSectionFixed {
   position: fixed;
   background-color: red;
   /* width: 275px; */
   width: inherit; /* 부모 요소(leftSection)의 너비 275px를 상속 */
   height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
@@ -42,6 +52,26 @@
 
 .logoCircle:hover {
   background-color: rgba(15, 20, 25, 0.1);
+}
+
+.postButton {
+  margin: 16px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 52px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 28px;
+  background-color: rgb(29, 155, 240);
+  width: 234px;
+  border: none;
+  color: rgb(255, 255, 255);
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 26px;
+}
+
+.postButton:hover {
+  background-color: rgb(26, 140, 216);
 }
 
 .rightSectionWrapper {

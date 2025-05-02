@@ -38,7 +38,7 @@
 @media all and (max-width: 1000px) {
   .container {
     flex-direction: column;
-    padding: 24px 12px;
+    padding: 36px;
   }
   .left {
     flex: 0;
@@ -46,11 +46,21 @@
   }
   .left img {
     width: 70px;
-    height: 70px;
+    height: 80px;
   }
   .right {
     flex: none;
     justify-content: center;
+  }
+
+  .right h1 {
+    font-size: 40px;
+  }
+  .right h2 {
+    font-size: 30px;
+  }
+  .right h3 {
+    font-size: 16px;
   }
 }
 
@@ -64,8 +74,8 @@
     justify-content: center;
   }
   .left img {
-    width: 450px;
-    height: 550px;
+    width: 500px;
+    height: 600px;
   }
   .right {
     justify-content: center;
