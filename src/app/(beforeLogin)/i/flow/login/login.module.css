@@ -130,11 +130,11 @@
 .closeButton:hover {
   background-color: rgba(15, 20, 25, 0.1);
 }
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   .closeButton {
     background-color: black;
   }
   .closeButton svg {
     fill: white;
   }
-}
+} */
