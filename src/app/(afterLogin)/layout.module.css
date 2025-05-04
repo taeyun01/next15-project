@@ -102,6 +102,11 @@
   height: 100%;
 }
 
+.searchWrapper {
+  margin-bottom: 60px;
+  width: inherit; /*rightSection의 너비 350px를 상속 */
+}
+
 .search {
   position: fixed;
   height: 42px;
@@ -126,4 +131,16 @@
   padding: 12px;
   margin-left: 5px;
   font-size: 15px;
+}
+
+.followRecommendWrapper {
+  font-size: 20px;
+  font-weight: bold;
+  background-color: rgb(247, 249, 249);
+  border-radius: 16px;
+  margin: 12px 0;
+  padding: 12px 16px;
+}
+.followRecommendWrapper h3 {
+  padding-bottom: 12px;
 }
