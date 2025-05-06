@@ -10,7 +10,7 @@ export default function PostForm() {
 
   const me = {
     id: "taeyun",
-    image: "/logo.jpg",
+    image: "/tlogo.png",
   };
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
