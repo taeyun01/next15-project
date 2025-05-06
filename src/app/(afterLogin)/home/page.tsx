@@ -10,7 +10,7 @@ const HomePage = () => {
       <TabProvider>
         <Tap />
         <PostForm />
-        {/* <Post /> */}
+        <Post />
       </TabProvider>
     </main>
   );
