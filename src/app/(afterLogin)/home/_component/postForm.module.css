@@ -42,6 +42,7 @@
   line-height: 24px;
   outline: none;
 }
+/* 플레이스홀더 폰트 변경 */
 .postForm textarea::placeholder {
   font-family: Malgun Gothic;
 }

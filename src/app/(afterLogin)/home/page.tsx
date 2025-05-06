@@ -9,11 +9,8 @@ const HomePage = () => {
     <main className={style.main}>
       <TabProvider>
         <Tap />
-        {/* <PostForm />
-        <Post />
-        <Post />
-        <Post />
-        <Post /> */}
+        <PostForm />
+        {/* <Post /> */}
       </TabProvider>
     </main>
   );

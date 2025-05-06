@@ -7,8 +7,9 @@ import Image from "next/image";
 export default function PostForm() {
   const imageRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
+
   const me = {
-    id: "zerohch0",
+    id: "taeyun",
     image: "/logo.jpg",
   };
 
