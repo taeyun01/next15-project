@@ -27,7 +27,7 @@
 
 .leftSectionFixed {
   position: fixed;
-  background-color: red;
+  /* background-color: red; */
   /* width: 275px; */
   width: inherit; /* 부모 요소(leftSection)의 너비 275px를 상속 */
   height: 100dvh;
@@ -47,7 +47,6 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: red;
 }
 
 .logoCircle:hover {
@@ -83,7 +82,7 @@
 }
 
 .rightSectionInner {
-  background-color: aqua;
+  /* background-color: aqua; */
   height: 100%;
   width: 990px;
   display: flex;
@@ -91,13 +90,13 @@
 }
 
 .main {
-  background-color: darkolivegreen;
+  /* background-color: darkolivegreen; */
   width: 600px;
   height: 200dvh;
 }
 
 .rightSection {
-  background-color: blue;
+  /* background-color: blue; */
   width: 350px;
   height: 100%;
 }
