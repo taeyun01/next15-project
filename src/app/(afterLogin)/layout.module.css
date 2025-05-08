@@ -13,8 +13,30 @@
 
 .leftSection {
   /* background-color: orange; */
-  width: 275px;
+  width: 72px;
   height: 100dvh;
+}
+
+.leftSectionFixed {
+  position: fixed;
+  width: inherit; /* 부모 요소(leftSection)의 너비 275px를 상속 */
+  padding: 0 8px;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media all and (min-width: 1300px) {
+  .leftSection {
+    width: 275px;
+  }
+
+  .leftSectionFixed {
+    position: fixed;
+    width: inherit;
+    align-items: flex-start;
+  }
 }
 
 .leftSectionFixed nav li {
@@ -23,16 +45,6 @@
 
 .leftSectionFixed nav {
   flex: 1;
-}
-
-.leftSectionFixed {
-  position: fixed;
-  /* background-color: red; */
-  /* width: 275px; */
-  width: inherit; /* 부모 요소(leftSection)의 너비 275px를 상속 */
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
 }
 
 .logo {
@@ -58,19 +70,43 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 52px;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 28px;
   background-color: rgb(29, 155, 240);
-  width: 234px;
+  width: 50px;
+  height: 50px;
   border: none;
   color: rgb(255, 255, 255);
   font-weight: 700;
   font-size: 17px;
-  border-radius: 26px;
+  border-radius: 50%;
 }
 
 .postButton:hover {
   background-color: rgb(26, 140, 216);
+}
+
+.postButton span {
+  display: none;
+}
+
+.postButton svg {
+  display: inline-block;
+  fill: white;
+  width: 24px;
+}
+
+@media all and (min-width: 1300px) {
+  .postButton {
+    height: 52px;
+    width: 234px;
+    border-radius: 26px;
+  }
+  .postButton span {
+    display: inline-block;
+  }
+  .postButton svg {
+    display: none;
+  }
 }
 
 .rightSectionWrapper {
@@ -84,21 +120,32 @@
 .rightSectionInner {
   /* background-color: aqua; */
   height: 100%;
-  width: 990px;
+  width: 600px;
   display: flex;
   justify-content: space-between;
+}
+
+.rightSection {
+  display: none;
+}
+
+@media all and (min-width: 1024px) {
+  .rightSection {
+    /* background-color: blue; */
+    display: block;
+    width: 350px;
+    height: 100%;
+  }
+
+  .rightSectionInner {
+    width: 990px;
+  }
 }
 
 .main {
   /* background-color: darkolivegreen; */
   width: 600px;
   height: 200dvh;
-}
-
-.rightSection {
-  /* background-color: blue; */
-  width: 350px;
-  height: 100%;
 }
 
 .followRecommendWrapper {
