@@ -94,6 +94,8 @@
   width: 100%;
   border-radius: 16px;
 }
+
+/** 이미지가 1개 일 때 */
 .postImageSection.oneImage {
   max-height: 510px;
   background-repeat: no-repeat;
@@ -103,6 +105,8 @@
   max-height: 510px;
   width: 100%;
 }
+
+/** 이미지가 2개 일 때 */
 .postImageSection.twoImage {
   height: 272px;
   display: flex;
@@ -120,6 +124,8 @@
   border-top-right-radius: 16px;
   border-bottom-right-radius: 16px;
 }
+
+/** 이미지가 3개 일 때 */
 .postImageSection.threeImage {
   height: 272px;
   display: flex;
@@ -149,6 +155,7 @@
   border-bottom-right-radius: 16px;
 }
 
+/** 이미지가 4개 일 때 */
 .postImageSection.fourImage {
   height: 272px;
   display: grid;
