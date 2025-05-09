@@ -24,11 +24,19 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const handlers = [
   http.post(`${baseUrl}/api/login`, () => {
     console.log("로그인");
-    return HttpResponse.json(User[1], {
-      headers: {
-        "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
+    return HttpResponse.json(
+      {
+        userId: 1,
+        nickname: "유태윤",
+        id: "taeyun",
+        image: "/tlogo.png",
       },
-    });
+      {
+        headers: {
+          "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
+        },
+      }
+    );
   }),
 
   http.post(`${baseUrl}/api/logout`, () => {

@@ -8,6 +8,14 @@ export async function middleware() {
   }
 }
 
+// 로그인을 안했을 때 해당 경로에 접근하면 로그인 페이지로 리다이렉트
 export const config = {
-  matcher: ["/compose/tweet", "/home", "/explore", "/messages", "/search"],
+  matcher: [
+    "/compose/tweet",
+    "/home",
+    "/explore",
+    "/messages",
+    "/search",
+    "/:username",
+  ],
 };
