@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MSWProvider } from "@/app/_component/MSWComponent";
+import AuthSession from "@/app/_component/AuthSession";
 
 if (
   process.env.NEXT_RUNTIME === "nodejs" &&
-  process.env.NODE_ENV !== "production" &&
-  process.env.NEXT_PUBLIC_MSW_ENABLED !== "false"
+  process.env.NODE_ENV !== "production"
+  // && process.env.NEXT_PUBLIC_MSW_ENABLED !== "false"
 ) {
   // eslint-disable-next-line
   const { server } = require("@/mocks/http");
@@ -36,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <MSWProvider>{children}</MSWProvider>
+        <MSWProvider>
+          <AuthSession>{children}</AuthSession>
+        </MSWProvider>
       </body>
     </html>
   );

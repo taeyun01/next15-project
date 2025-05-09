@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { signIn } from "@/auth";
 
 const signup = async (
   // eslint-disable-next-line
@@ -35,14 +36,23 @@ const signup = async (
       }
     );
 
-    console.log(response.status);
+    console.log("status: ", response.status);
 
     // 이미 회원가입 한 아이디인 경우
     if (response.status === 403) {
       return { message: "user_exists" };
     }
 
-    console.log(response.json());
+    const user = await response.json();
+    console.log("user: ", user);
+
+    // 회원가입 후 로그인까지
+    await signIn("credentials", {
+      username: formData.get("id"),
+      password: formData.get("password"),
+      redirect: false,
+    });
+
     shouldRedirect = true;
   } catch (err) {
     console.error(err);

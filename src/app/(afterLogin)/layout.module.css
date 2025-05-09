@@ -17,6 +17,11 @@
   height: 100dvh;
 }
 
+.noLogin {
+  width: 72px;
+  height: 100dvh;
+}
+
 .leftSectionFixed {
   position: fixed;
   width: inherit; /* 부모 요소(leftSection)의 너비 275px를 상속 */

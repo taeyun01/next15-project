@@ -4,7 +4,8 @@ import BackButton from "@/app/(beforeLogin)/_component/BackButton";
 import style from "./signup.module.css";
 import Form from "next/form";
 import signup from "../_lib/signup";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
+import { useActionState } from "react";
 
 function showMessage(message: string | null | undefined) {
   if (message === "no_id") {
@@ -26,7 +27,8 @@ function showMessage(message: string | null | undefined) {
 }
 
 export default function SignupModal() {
-  const [state, formAction] = useFormState(signup, {
+  // useFormState에서 useActionState로 바뀜
+  const [state, formAction] = useActionState(signup, {
     message: null,
   });
   const { pending } = useFormStatus();

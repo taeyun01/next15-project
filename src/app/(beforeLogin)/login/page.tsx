@@ -3,13 +3,19 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Main from "../_component/Main";
+import { useSession } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
+    if (session?.user) {
+      return router.replace("/home");
+    }
+
     router.replace("/i/flow/login");
-  }, [router]);
+  }, [router, session]);
 
   return <Main />;
 }

@@ -3,7 +3,7 @@
 import BackButton from "@/app/(beforeLogin)/_component/BackButton";
 import style from "./login.module.css";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function LoginModal() {
@@ -11,6 +11,11 @@ export default function LoginModal() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
+  const { data: session } = useSession();
+
+  if (session?.user) {
+    return router.replace("/home");
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

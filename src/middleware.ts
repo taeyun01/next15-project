@@ -16,6 +16,6 @@ export const config = {
     "/explore",
     "/messages",
     "/search",
-    "/:username",
+    // "/:username", // 이 경로는 로그인 여부와 상관없이 접근 가능
   ],
 };

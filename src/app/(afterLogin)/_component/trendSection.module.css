@@ -13,3 +13,8 @@
   margin-bottom: 12px;
   padding: 0 16px;
 }
+
+.noTrend {
+  font-weight: bold;
+  padding: 12px 16px;
+}
