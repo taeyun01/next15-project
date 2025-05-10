@@ -7,54 +7,18 @@ import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
 import Image from "next/image";
 import PostArticle from "@/app/(afterLogin)/_component/PostArticle";
 import PostImages from "@/app/(afterLogin)/_component/PostImages";
-// import { faker } from "@faker-js/faker";
+import { Post as IPost } from "@/model/Post";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 type Props = {
   noImage?: boolean;
+  post: IPost;
 };
 
-export default function Post({ noImage }: Props) {
-  const target = {
-    postId: 1,
-    User: {
-      id: "elonmusk",
-      nickname: "Elon Musk",
-      image: "/logo.jpg",
-    },
-    content: "안녕하세요 일론 머스크 입니다! 반갑습니다!",
-    createdAt: new Date(),
-    // eslint-disable-next-line
-    Images: [] as any[], // TODO: 추후 타입 정의 필요
-  };
-
-  // 50% 확률로 이미지 추가
-  if (Math.random() > 0.5 && !noImage) {
-    target.Images.push(
-      {
-        imageId: 1,
-        // link: faker.image.urlLoremFlickr(),
-        link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20240731/0016/P001759776.jpg/dims/resize/1280",
-      },
-      {
-        imageId: 2,
-        // link: faker.image.urlLoremFlickr(),
-        link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20240731/0016/P001759776.jpg/dims/resize/1280",
-      },
-      {
-        imageId: 3,
-        // link: faker.image.urlLoremFlickr(),
-        link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20240731/0016/P001759776.jpg/dims/resize/1280",
-      }
-      // {
-      //   imageId: 4,
-      //   // link: faker.image.urlLoremFlickr(),
-      //   link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20240731/0016/P001759776.jpg/dims/resize/1280",
-      // }
-    );
-  }
+export default function Post({ noImage, post }: Props) {
+  const target = post;
 
   return (
     <PostArticle post={target}>
@@ -83,9 +47,11 @@ export default function Post({ noImage }: Props) {
             </span>
           </div>
           <div>{target.content}</div>
-          <div>
-            <PostImages post={target} />
-          </div>
+          {!noImage && (
+            <div>
+              <PostImages post={target} />
+            </div>
+          )}
           <ActionButtons />
         </div>
       </div>

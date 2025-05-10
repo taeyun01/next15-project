@@ -24,19 +24,11 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const handlers = [
   http.post(`${baseUrl}/api/login`, () => {
     console.log("로그인");
-    return HttpResponse.json(
-      {
-        userId: 1,
-        nickname: "유태윤",
-        id: "taeyun",
-        image: "/tlogo.png",
+    return HttpResponse.json(User[1], {
+      headers: {
+        "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
       },
-      {
-        headers: {
-          "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
-        },
-      }
-    );
+    });
   }),
 
   http.post(`${baseUrl}/api/logout`, () => {
@@ -61,21 +53,21 @@ export const handlers = [
   }),
 
   http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
-    await delay(3000);
-    const url = new URL(request.url);
-    const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
+    // await delay(3000);
+    // const url = new URL(request.url);
+    // const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
     return HttpResponse.json([
       {
-        postId: cursor + 1,
+        postId: 1,
         User: User[0],
-        content: `${cursor + 1} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${1} 안녕 난 msw서버에서 내려온 데이터야.`,
         Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
         createdAt: generateDate(),
       },
       {
-        postId: cursor + 2,
+        postId: 2,
         User: User[0],
-        content: `${cursor + 2} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${2} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
@@ -83,16 +75,16 @@ export const handlers = [
         createdAt: generateDate(),
       },
       {
-        postId: cursor + 3,
+        postId: 3,
         User: User[0],
-        content: `${cursor + 3} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${3} T.com is so marvelous. I'm gonna buy that.`,
         Images: [],
         createdAt: generateDate(),
       },
       {
-        postId: cursor + 4,
+        postId: 4,
         User: User[0],
-        content: `${cursor + 4} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${4} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
@@ -102,9 +94,9 @@ export const handlers = [
         createdAt: generateDate(),
       },
       {
-        postId: cursor + 5,
+        postId: 5,
         User: User[0],
-        content: `${cursor + 5} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${5} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
