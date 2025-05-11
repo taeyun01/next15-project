@@ -5,10 +5,17 @@ import logo from "../../../public/tlogo.png";
 import NavMenu from "@/app/(afterLogin)/_component/NavMenu";
 import LogoutButton from "@/app/(afterLogin)/_component/LogoutButton";
 import TrendSection from "@/app/(afterLogin)/_component/TrendSection";
-import FollowRecommend from "@/app/(afterLogin)/_component/FollowRecommend";
 import RightSearchZone from "@/app/(afterLogin)/_component/RightSearchZone";
 import { auth } from "@/auth";
 import RQProvider from "@/app/(afterLogin)/_component/RQProvider";
+import FollowRecommendSection from "@/app/(afterLogin)/_component/FollowRecommendSection";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { getTrends } from "@/app/(afterLogin)/_lib/getTrends";
+import { getFollowRecommends } from "@/app/(afterLogin)/_lib/getFollowRecommends";
 
 type Props = {
   children: React.ReactNode;
@@ -17,6 +24,21 @@ type Props = {
 
 export default async function AfterLoginLayout({ children, modal }: Props) {
   const session = await auth();
+  const queryClient = new QueryClient();
+
+  // TODO: 추후 수정 프리팽칭 x
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["trends"],
+      queryFn: getTrends,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["users", "followRecommends"],
+      queryFn: getFollowRecommends,
+    }),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <div className={style.container}>
@@ -54,22 +76,22 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
         </section>
       </header>
       <RQProvider>
-        <div className={style.rightSectionWrapper}>
-          <div className={style.rightSectionInner}>
-            <main className={style.main}>{children}</main>
-            <section className={style.rightSection}>
-              <RightSearchZone />
-              <TrendSection />
-              <div className={style.followRecommendWrapper}>
-                <h3>팔로우 추천</h3>
-                <FollowRecommend />
-                <FollowRecommend />
-                <FollowRecommend />
-              </div>
-            </section>
+        <HydrationBoundary state={dehydratedState}>
+          <div className={style.rightSectionWrapper}>
+            <div className={style.rightSectionInner}>
+              <main className={style.main}>{children}</main>
+              <section className={style.rightSection}>
+                <RightSearchZone />
+                <TrendSection />
+                <div className={style.followRecommendWrapper}>
+                  <h3>팔로우 추천</h3>
+                  <FollowRecommendSection />
+                </div>
+              </section>
+            </div>
           </div>
-        </div>
-        {modal}
+          {modal}
+        </HydrationBoundary>
       </RQProvider>
     </div>
   );
