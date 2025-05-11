@@ -19,7 +19,7 @@ const User = [
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
 export const handlers = [
   http.post(`${baseUrl}/api/login`, () => {
@@ -30,7 +30,6 @@ export const handlers = [
       },
     });
   }),
-
   http.post(`${baseUrl}/api/logout`, () => {
     console.log("로그아웃");
     return new HttpResponse(null, {
@@ -39,7 +38,6 @@ export const handlers = [
       },
     });
   }),
-
   http.post(`${baseUrl}/api/users`, async ({ request }) => {
     console.log("회원가입");
     // return HttpResponse.text(JSON.stringify("user_exists"), {
@@ -51,7 +49,6 @@ export const handlers = [
       },
     });
   }),
-
   http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
     // await delay(3000);
     // const url = new URL(request.url);
@@ -61,7 +58,12 @@ export const handlers = [
         postId: 1,
         User: User[0],
         content: `${1} 안녕 난 msw서버에서 내려온 데이터야.`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20240731/0016/P001759776.jpg/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
@@ -69,8 +71,14 @@ export const handlers = [
         User: User[0],
         content: `${2} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
-          { imageId: 1, link: faker.image.urlLoremFlickr() },
-          { imageId: 2, link: faker.image.urlLoremFlickr() },
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+          {
+            imageId: 2,
+            link: "https://newsimg-hams.hankookilbo.com/2022/10/19/7576de8e-e4f6-4827-9f17-cfefe4be052f.jpg",
+          },
         ],
         createdAt: generateDate(),
       },
@@ -86,10 +94,22 @@ export const handlers = [
         User: User[0],
         content: `${4} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
-          { imageId: 1, link: faker.image.urlLoremFlickr() },
-          { imageId: 2, link: faker.image.urlLoremFlickr() },
-          { imageId: 3, link: faker.image.urlLoremFlickr() },
-          { imageId: 4, link: faker.image.urlLoremFlickr() },
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20211225/P001547417.jpg/dims/resize/1280",
+          },
+          {
+            imageId: 2,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20220211/P001563044.jpg/dims/resize/1280",
+          },
+          {
+            imageId: 3,
+            link: "https://pbs.twimg.com/profile_images/1688763174714245120/htmgYD32_400x400.jpg",
+          },
+          {
+            imageId: 4,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20160408/P000265471.png/dims/resize/1280",
+          },
         ],
         createdAt: generateDate(),
       },
@@ -106,48 +126,71 @@ export const handlers = [
       },
     ]);
   }),
-
   http.get(`${baseUrl}/api/followingPosts`, async ({ request }) => {
-    await delay(3000);
+    // await delay(1000);
     return HttpResponse.json([
       {
         postId: 1,
         User: User[0],
         content: `${1} Stop following me. I'm too famous.`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 2,
         User: User[0],
         content: `${2} Stop following me. I'm too famous.`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 3,
         User: User[0],
         content: `${3} Stop following me. I'm too famous.`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 4,
         User: User[0],
         content: `${4} Stop following me. I'm too famous.`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 5,
         User: User[0],
         content: `${5} Stop following me. I'm too famous.`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
     ]);
   }),
-
   http.get(`${baseUrl}/api/search/:tag`, ({ request, params }) => {
     const { tag } = params;
     return HttpResponse.json([
@@ -155,35 +198,60 @@ export const handlers = [
         postId: 1,
         User: User[0],
         content: `${1} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 2,
         User: User[0],
         content: `${2} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 3,
         User: User[0],
         content: `${3} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 4,
         User: User[0],
         content: `${4} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
       {
         postId: 5,
         User: User[0],
         content: `${5} 검색결과 ${tag}`,
-        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        Images: [
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20151214/P000224946.png/dims/resize/1280",
+          },
+        ],
         createdAt: generateDate(),
       },
     ]);

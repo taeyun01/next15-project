@@ -8,15 +8,24 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import getPostRecommends from "@/app/(afterLogin)/home/_lib/getPostRecommends";
-import PostRecommends from "@/app/(afterLogin)/home/_component/PostRecommends";
+import TabDecider from "@/app/(afterLogin)/home/_component/TabDecider";
+import { getFollowingPosts } from "@/app/(afterLogin)/home/_lib/getFollowingPosts";
 
 const HomePage = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["posts", "recommends"],
-    queryFn: getPostRecommends,
-  }); // 데이터를 불러옴
+  // TODO: 추후 수정 ["posts", "followings"]은 프리팽칭 x
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["posts", "recommends"],
+      queryFn: getPostRecommends,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["posts", "followings"],
+      queryFn: getFollowingPosts,
+    }),
+  ]);
+
   // 데이터를 불러오고 나면 dehydrate 함수를 통해 데이터를 준비
   const dehydratedState = dehydrate(queryClient); // Hydrate는 서버에서온 데이터를 클라이언트에서 그대로 형식맞춰서 물려받음 즉, 서버에서 미리 데이터를 준비
 
@@ -26,7 +35,7 @@ const HomePage = async () => {
         <TabProvider>
           <Tap />
           <PostForm />
-          <PostRecommends />
+          <TabDecider />
         </TabProvider>
       </HydrationBoundary>
     </main>
