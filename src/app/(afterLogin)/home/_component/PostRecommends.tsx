@@ -1,12 +1,18 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import getPostRecommends from "@/app/(afterLogin)/home/_lib/getPostRecommends";
 import Post from "@/app/(afterLogin)/_component/Post";
 import { Post as IPost } from "@/model/Post";
 
 const PostRecommends = () => {
-  const { data } = useQuery<IPost[]>({
+  const { data } = useInfiniteQuery<
+    IPost[],
+    object,
+    InfiniteData<IPost[]>, // 인피니티 쿼리의 데이터 타입
+    [_1: string, _2: string], // queryKey의 파라미터 타입 자리
+    number // initialPageParam, getNextPageParam의 타입 자리
+  >({
     queryKey: ["posts", "recommends"],
     queryFn: getPostRecommends,
     staleTime: 60 * 1000, // 60초 동안 캐시 유지. (1분이 지나고 새로고침을 하면 서버로 부터 데이터를 새로 가져옴) 컨텐츠 특성에 따라 조정하면됨
@@ -15,11 +21,18 @@ const PostRecommends = () => {
     // Inactive 상태일 때, gcTime이 돌아가기 시작함. 즉, data를 사용하지 않는 화면에 이동을 했을때 gcTime이 돌아가고 5분뒤에 메모리에서 정리가됨 (inactive란 지금 보는 화면에서 queryKey: ["posts", "recommends"] 이 쿼리를 사용하지 않는다면 inactive상태가 됨. 즉 해당 쿼리를 사용하지 않는 다른 화면으로 넘어갔을 때. 그냥 이 쿼리를 쓰고 있냐 안쓰고 있냐 상태임)
     // 만약 5분 사이에 돌아오면 캐시되어있던 데이터를 바로 보여주지만, 5분이 지나면 메모리에서 정리가 되면 캐시가 날아가기 때문에 데이터를 새로 불러옴
     //* staleTime은 항상 gcTime보다 짧아야한다.
+    initialPageParam: 0, // 처음에 [1, 2, 3, 4, 5]개씩 가져올거임. 그럼 1~5는 last페이지임 [[6, 7, 8, 9, 10], [11, 12, 13, 14, 15]] ... 인피니티 쿼리는 이런식으로 값이 들어있음 (2차원 배열로)
+    getNextPageParam: (lastPage) => {
+      return lastPage.at(-1)?.postId; // last페이지의 마지막 게시글의 postId를 가져옴
+    },
   });
 
   console.log(data);
 
-  return data?.map((post) => <Post key={post.postId} post={post} />);
+  // 2차원 배열을 1차원 배열로 펼치기
+  const posts = data?.pages.flatMap((page) => page);
+
+  return posts?.map((post) => <Post key={post.postId} post={post} />);
 };
 
 export default PostRecommends;

@@ -51,13 +51,13 @@ export const handlers = [
   }),
   http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
     // await delay(3000);
-    // const url = new URL(request.url);
-    // const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
+    const url = new URL(request.url);
+    const cursor = parseInt(url.searchParams.get("cursor") as string) || 0; // cursor 파라미터가 없으면 0으로 초기화
     return HttpResponse.json([
       {
-        postId: 1,
+        postId: cursor + 1,
         User: User[0],
-        content: `${1} 안녕 난 msw서버에서 내려온 데이터야.`,
+        content: `${cursor + 1} 안녕 난 msw서버에서 내려온 데이터야.`,
         Images: [
           {
             imageId: 1,
@@ -67,9 +67,9 @@ export const handlers = [
         createdAt: generateDate(),
       },
       {
-        postId: 2,
+        postId: cursor + 2,
         User: User[0],
-        content: `${2} T.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 2} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
           {
             imageId: 1,
@@ -83,16 +83,16 @@ export const handlers = [
         createdAt: generateDate(),
       },
       {
-        postId: 3,
+        postId: cursor + 3,
         User: User[0],
-        content: `${3} T.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 3} T.com is so marvelous. I'm gonna buy that.`,
         Images: [],
         createdAt: generateDate(),
       },
       {
-        postId: 4,
+        postId: cursor + 4,
         User: User[0],
-        content: `${4} T.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 4} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
           {
             imageId: 1,
@@ -114,13 +114,19 @@ export const handlers = [
         createdAt: generateDate(),
       },
       {
-        postId: 5,
+        postId: cursor + 5,
         User: User[0],
-        content: `${5} T.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 5} T.com is so marvelous. I'm gonna buy that.`,
         Images: [
-          { imageId: 1, link: faker.image.urlLoremFlickr() },
-          { imageId: 2, link: faker.image.urlLoremFlickr() },
-          { imageId: 3, link: faker.image.urlLoremFlickr() },
+          {
+            imageId: 1,
+            link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20211225/P001547417.jpg/dims/resize/1280",
+          },
+
+          {
+            imageId: 2,
+            link: "https://pbs.twimg.com/profile_images/1688763174714245120/htmgYD32_400x400.jpg",
+          },
         ],
         createdAt: generateDate(),
       },

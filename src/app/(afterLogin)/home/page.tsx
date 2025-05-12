@@ -16,9 +16,10 @@ const HomePage = async () => {
 
   // TODO: 추후 수정 ["posts", "followings"]은 프리팽칭 x
   await Promise.all([
-    queryClient.prefetchQuery({
+    queryClient.prefetchInfiniteQuery({
       queryKey: ["posts", "recommends"],
       queryFn: getPostRecommends,
+      initialPageParam: 0, // cursor값 초기화
     }),
     queryClient.prefetchQuery({
       queryKey: ["posts", "followings"],
