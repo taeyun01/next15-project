@@ -1,40 +1,45 @@
 import style from "./profile.module.css";
-import Post from "@/app/(afterLogin)/_component/Post";
-import BackButton from "@/app/(afterLogin)/_component/BackButton";
-import Image from "next/image";
-import FollowButton from "@/app/(afterLogin)/[username]/_compenent/FollowButton";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import UserPosts from "@/app/(afterLogin)/[username]/_compenent/UserPosts";
+import UserInfo from "@/app/(afterLogin)/[username]/_compenent/UserInfo";
+import { getUser } from "@/app/(afterLogin)/[username]/_lib/getUser";
+import { getUserPosts } from "@/app/(afterLogin)/[username]/_lib/getUserPosts";
 
-export default async function Profile() {
-  const user = {
-    id: "taeyun",
-    nickname: "유태윤",
-    image: "/tlogo.png",
-  };
+type Props = {
+  params: { username: string };
+};
+
+//* 어떤 기준으로 서버사이드 렌더링을 하냐??: 검색페이지에 노출이 필요한 페이지를 서버사이드 렌더링을 해주면 됨
+export default async function Profile({ params }: Props) {
+  const { username } = params;
+  const queryClient = new QueryClient();
+  // console.log("username: ", username);
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["users", username],
+      queryFn: getUser,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["posts", "users", username],
+      queryFn: getUserPosts,
+    }),
+  ]);
+
+  const dehydratedState = dehydrate(queryClient);
 
   return (
     <main className={style.main}>
-      <div className={style.header}>
-        <BackButton />
-        <h3 className={style.headerTitle}>{user.nickname}</h3>
-      </div>
-      <div className={style.userZone}>
-        <div className={style.userImage}>
-          <Image src={user.image} alt={user.id} width={134} height={134} />
+      <HydrationBoundary state={dehydratedState}>
+        <UserInfo username={username} />
+        <div>
+          <UserPosts username={username} />
         </div>
-        <div className={style.userName}>
-          <div>{user.nickname}</div>
-          <div>@{user.id}</div>
-        </div>
-        <FollowButton />
-      </div>
-      <div>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-      </div>
+      </HydrationBoundary>
     </main>
   );
 }
