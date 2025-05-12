@@ -5,12 +5,14 @@ import style from "./commentForm.module.css";
 import Image from "next/image";
 import { useQueryClient } from "@tanstack/react-query";
 import { Post as IPost } from "@/model/Post";
+import { useSession } from "next-auth/react";
 
 type Props = {
   id: string;
 };
 
 export default function CommentForm({ id }: Props) {
+  const { data: me } = useSession();
   const [content, setContent] = useState("");
   const imageRef = useRef<HTMLInputElement>(null);
 
@@ -23,11 +25,6 @@ export default function CommentForm({ id }: Props) {
 
   const onChange = () => {};
 
-  const me = {
-    id: "taeyun",
-    image: "/tlogo.png",
-  };
-
   // 없는 게시글 id면 댓글 작성 폼을 보여주지 않음
   if (!post) return null;
 
@@ -35,7 +32,12 @@ export default function CommentForm({ id }: Props) {
     <form className={style.postForm} onSubmit={onSubmit}>
       <div className={style.postUserSection}>
         <div className={style.postUserImage}>
-          <Image src={me.image} alt={me.id} width={40} height={40} />
+          <Image
+            src={me?.user?.image as string}
+            alt={me?.user?.email as string}
+            width={40}
+            height={40}
+          />
         </div>
       </div>
       <div className={style.postInputSection}>

@@ -3,18 +3,15 @@
 import style from "./navMenu.module.css";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function NavMenu() {
+  const { data: me } = useSession(); // me.user.(email, name, image)
   const segment = useSelectedLayoutSegment(); // 현재 선택된 라우트 세그먼트
   // 즉, '/home'에 가면 'home'이라는 세그먼트가 선택되고, '/explore'에 가면 'explore'이라는 세그먼트가 선택됨
   // '/home/tweet'에 가도 home만 선택됨.
   // 하위 주소까지 전부 가져오고 싶다면 useSelectedLayoutSegments를 사용하면 됨. 그럼 ['home', 'tweet'] 이렇게 두 개가 선택됨.
-  console.log(segment);
-
-  // 임시로 내 정보 있는것처럼 사용
-  const me = {
-    id: "taeyun",
-  };
+  // console.log(segment);
 
   return (
     <>
@@ -123,11 +120,11 @@ export default function NavMenu() {
           </div>
         </Link>
       </li>
-      {me?.id && (
+      {me?.user?.email && (
         <li>
-          <Link href={`/${me?.id}`}>
+          <Link href={`/${me?.user?.email}`}>
             <div className={style.navPill}>
-              {segment === me.id ? (
+              {segment === me?.user?.email ? (
                 <>
                   <svg
                     width={26}
