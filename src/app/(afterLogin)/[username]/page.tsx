@@ -10,12 +10,12 @@ import { getUser } from "@/app/(afterLogin)/[username]/_lib/getUser";
 import { getUserPosts } from "@/app/(afterLogin)/[username]/_lib/getUserPosts";
 
 type Props = {
-  params: { username: string };
+  params: Promise<{ username: string }>;
 };
 
 //* 어떤 기준으로 서버사이드 렌더링을 하냐??: 검색페이지에 노출이 필요한 페이지를 서버사이드 렌더링을 해주면 됨
 export default async function Profile({ params }: Props) {
-  const { username } = params;
+  const { username } = await params;
   const queryClient = new QueryClient();
   // console.log("username: ", username);
 

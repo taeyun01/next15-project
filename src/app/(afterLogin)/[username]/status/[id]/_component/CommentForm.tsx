@@ -3,10 +3,19 @@
 import { useRef, useState } from "react";
 import style from "./commentForm.module.css";
 import Image from "next/image";
+import { useQueryClient } from "@tanstack/react-query";
+import { Post as IPost } from "@/model/Post";
 
-export default function CommentForm() {
+type Props = {
+  id: string;
+};
+
+export default function CommentForm({ id }: Props) {
   const [content, setContent] = useState("");
   const imageRef = useRef<HTMLInputElement>(null);
+
+  const queryClient = useQueryClient();
+  const post = queryClient.getQueryData<IPost>(["posts", id]);
 
   const onClickButton = () => {};
 
@@ -18,6 +27,9 @@ export default function CommentForm() {
     id: "taeyun",
     image: "/tlogo.png",
   };
+
+  // 없는 게시글 id면 댓글 작성 폼을 보여주지 않음
+  if (!post) return null;
 
   return (
     <form className={style.postForm} onSubmit={onSubmit}>

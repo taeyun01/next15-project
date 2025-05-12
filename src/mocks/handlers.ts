@@ -314,6 +314,7 @@ export const handlers = [
 
   http.get(`${baseUrl}/api/posts/:postId`, ({ request, params }) => {
     const { postId } = params;
+    // 포스트 아이디가 10보다 크면 404 에러 반환
     if (parseInt(postId as string) > 10) {
       return HttpResponse.json(
         { message: "no_such_post" },
