@@ -108,6 +108,7 @@
 }
 .actionButton:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 .actionButton:hover {
   background-color: rgb(39, 44, 48);
@@ -130,11 +131,18 @@
 .closeButton:hover {
   background-color: rgba(15, 20, 25, 0.1);
 }
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   .closeButton {
     background-color: black;
   }
   .closeButton svg {
     fill: white;
   }
-} */
+}
+
+.message {
+  color: red;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+}
