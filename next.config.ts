@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["loremflickr.com"],
   },
+  // /upload:slug 주소를 만나면 localhost:1111/upload/:slug 이런식으로 바꿔서 실행해줌
+  async rewrites() {
+    return [
+      {
+        source: "/upload/:slug",
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/upload/:slug`, // Matched parameters can be used in the destination
+      },
+      // 바꾸고 싶은 주소들이 있다면 추가 가능
+    ];
+  },
 };
 
 export default nextConfig;
