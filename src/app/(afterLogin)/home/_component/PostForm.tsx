@@ -5,6 +5,8 @@ import style from "./postForm.module.css";
 import Image from "next/image";
 import { Session } from "next-auth";
 import TextareaAutosize from "react-textarea-autosize";
+import { useQueryClient } from "@tanstack/react-query";
+import { Post } from "@/model/Post";
 
 type Props = {
   me: Session | null;
@@ -16,25 +18,71 @@ export default function PostForm({ me }: Props) {
   const [preview, setPreview] = useState<
     Array<{ dataUrl: string; file: File } | null>
   >([]);
+  const queryClient = useQueryClient();
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
   };
 
-  const onSubmit: FormEventHandler = (e) => {
+  const onSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("content", content);
     preview.forEach((p) => {
+      // console.log(p); // 이미지 파일 정보 객체 (dataUrl, file등등)
       if (p) {
         formData.append("images", p.file);
       }
     });
-    return fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-      method: "post",
-      credentials: "include",
-      body: formData,
-    });
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`,
+        {
+          method: "post",
+          credentials: "include",
+          body: formData,
+        }
+      );
+
+      // 게시글 작성 성공 시 입력 내용 초기화
+      if (response.status === 201) {
+        setContent("");
+        setPreview([]);
+        const newPost = await response.json();
+        console.log(newPost);
+        queryClient.setQueryData(
+          ["posts", "recommends"],
+          (prevData: { pages: Post[][] }) => {
+            // 불변성 유지를 위한 작업
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            prevData.pages[0].unshift(newPost);
+            return prevData;
+          }
+        );
+
+        queryClient.setQueryData(
+          ["posts", "followings"],
+          (prevData: { pages: Post[][] }) => {
+            // 불변성 유지를 위한 작업
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            prevData.pages[0].unshift(newPost);
+            return prevData;
+          }
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      alert("업로드 중 에러가 발생했습니다.");
+      return;
+    }
   };
 
   const onClickButton = () => {
