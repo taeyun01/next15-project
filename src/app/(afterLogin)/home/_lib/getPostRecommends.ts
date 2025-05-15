@@ -10,6 +10,7 @@ const getPostRecommends = async ({ pageParam }: Props) => {
         tags: ["posts", "recommends"],
       },
       // cache: "no-store", // force-cache는 캐시 활성화, 기본값은 no-store 캐시 비활성화
+      // cache: "force-cache",
     }
   );
 

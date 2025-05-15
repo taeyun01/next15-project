@@ -7,7 +7,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import getPostRecommends from "@/app/(afterLogin)/home/_lib/getPostRecommends";
+import { getPostRecommends } from "@/app/(afterLogin)/home/_lib/getPostRecommends";
 import TabDecider from "@/app/(afterLogin)/home/_component/TabDecider";
 import { getFollowingPosts } from "@/app/(afterLogin)/home/_lib/getFollowingPosts";
 

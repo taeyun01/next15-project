@@ -50,9 +50,17 @@ export const handlers = [
     });
   }),
   http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
-    // await delay(3000);
+    console.log("추천게시글");
+    await delay(3000);
+    console.log("딜레이 종료");
     const url = new URL(request.url);
-    const cursor = parseInt(url.searchParams.get("cursor") as string) || 0; // cursor 파라미터가 없으면 0으로 초기화
+    const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
+
+    // 최대 20개의 포스트까지만 생성 (cursor가 15를 넘어가면 빈 배열 반환)
+    if (cursor >= 15) {
+      return HttpResponse.json([]);
+    }
+
     return HttpResponse.json([
       {
         postId: cursor + 1,
@@ -122,7 +130,6 @@ export const handlers = [
             imageId: 1,
             link: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0500/ko/20211225/P001547417.jpg/dims/resize/1280",
           },
-
           {
             imageId: 2,
             link: "https://pbs.twimg.com/profile_images/1688763174714245120/htmgYD32_400x400.jpg",
