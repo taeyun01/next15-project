@@ -23,6 +23,7 @@ const signup = async (
   if (!formData.get("image")) {
     return { message: "no_image" };
   }
+  formData.set("nickname", formData.get("name") as string);
 
   let shouldRedirect = false;
 
@@ -32,7 +33,7 @@ const signup = async (
       {
         method: "post",
         body: formData,
-        credentials: "include",
+        credentials: "include", // 쿠키전달 (지금 세션을 사용하기 때문에 세션쿠키가 브라우저에 등록이 돼야되므로 등록)
       }
     );
 
@@ -41,10 +42,19 @@ const signup = async (
     // 이미 회원가입 한 아이디인 경우
     if (response.status === 403) {
       return { message: "user_exists" };
+    } else if (response.status === 400) {
+      return {
+        message: (await response.json()).data[0],
+        // 에러가 뜨면 입력했던 폼 내용들이 다 사라지므로 다시 전달해줘야함
+        id: formData.get("id"),
+        nickname: formData.get("nickname"),
+        password: formData.get("password"),
+        image: formData.get("image"), // 이미지는 다시 전달해줘도 어쩔 수 없이 다시 업로드 해야함
+      };
     }
 
-    const user = await response.json();
-    console.log("user: ", user);
+    // const user = await response.json();
+    // console.log("user: ", user);
 
     // 회원가입 후 로그인까지
     await signIn("credentials", {

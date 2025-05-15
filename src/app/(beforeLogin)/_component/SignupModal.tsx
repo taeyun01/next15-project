@@ -23,7 +23,11 @@ function showMessage(message: string | null | undefined) {
   if (message === "user_exists") {
     return "이미 사용 중인 아이디입니다.";
   }
-  return "";
+  if (message === "nickname must be a string") {
+    return "닉네임이 필요합니다.";
+  }
+
+  return message;
 }
 
 export default function SignupModal() {
@@ -54,6 +58,7 @@ export default function SignupModal() {
                   type="text"
                   placeholder=""
                   required
+                  defaultValue={state?.id as string}
                 />
               </div>
               <div className={style.inputDiv}>
@@ -67,6 +72,7 @@ export default function SignupModal() {
                   type="text"
                   placeholder=""
                   required
+                  defaultValue={state?.nickname as string}
                 />
               </div>
               <div className={style.inputDiv}>
@@ -80,6 +86,7 @@ export default function SignupModal() {
                   type="password"
                   placeholder=""
                   required
+                  defaultValue={state?.password as string}
                 />
               </div>
               <div className={style.inputDiv}>
@@ -93,6 +100,7 @@ export default function SignupModal() {
                   type="file"
                   accept="image/*"
                   required
+                  defaultValue={state?.image as string}
                 />
               </div>
             </div>

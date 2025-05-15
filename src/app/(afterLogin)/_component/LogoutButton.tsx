@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import style from "./logoutButton.module.css";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Session } from "next-auth";
 
-export default function LogoutButton() {
+// Session임포트는 from "next-auth" 나 from "@auth/core/types" 둘 다 됨
+type Props = {
+  me: Session | null;
+};
+
+export default function LogoutButton({ me }: Props) {
   const router = useRouter();
-  const { data: me } = useSession();
   // console.log(me);
 
   const onLogout = () => {
