@@ -6,7 +6,7 @@ export async function getFollowingPosts() {
         tags: ["posts", "followings"],
       },
       credentials: "include",
-      cache: "force-cache",
+      // cache: "force-cache",
     }
   );
 
