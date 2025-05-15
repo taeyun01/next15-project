@@ -51,7 +51,7 @@ export const handlers = [
   }),
   http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
     console.log("추천게시글");
-    await delay(3000);
+    // await delay(3000);
     console.log("딜레이 종료");
     const url = new URL(request.url);
     const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
@@ -140,7 +140,7 @@ export const handlers = [
     ]);
   }),
   http.get(`${baseUrl}/api/followingPosts`, async ({ request }) => {
-    // await delay(1000);
+    await delay(3000);
     return HttpResponse.json([
       {
         postId: 1,
