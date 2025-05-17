@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChangeEventHandler,
-  FormEvent,
-  FormEventHandler,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEventHandler, FormEvent, useRef, useState } from "react";
 import style from "./postForm.module.css";
 import Image from "next/image";
 import { Session } from "next-auth";
